@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Gestión de Niveles</title>
+    <link rel="stylesheet" href="style3.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+<header>
+    <h1>Gestión de Niveles de Cocinas</h1>
+</header>
+
+<div class="container">
+    <div id="configAlert" style="color: #f1c40f; margin-bottom: 20px; text-align: center; border: 1px solid #f1c40f; padding: 10px; border-radius: 8px;">
+        Cargando datos, por favor espere...
+    </div>
+
+    <div class="row">
+        <div>
+            <label for="kitchenSelect">Cocina:</label>
+            <select id="kitchenSelect"></select>
+            <button id="addKitchenBtn" class="btn host-only">+ Añadir Cocina</button>
+            <button id="delKitchenBtn" class="btn danger host-only">🗑️ Eliminar Cocina</button>
+        </div>
+
+        <div>
+            <label for="productSelect">Producto:</label>
+            <select id="productSelect"></select>
+            <button id="addProductBtn" class="btn host-only">+ Añadir Producto</button>
+            <button id="delProductBtn" class="btn danger host-only">🗑️ Eliminar Producto</button>
+        </div>
+    </div>
+
+    <label style="margin-top: 25px;">Nivel Seleccionado:</label>
+    <div class="level-options">
+        <button class="level-btn level-0" data-color="red">0-25</button>
+        <button class="level-btn level-25" data-color="orange">25-50</button>
+        <button class="level-btn level-50" data-color="yellow">50-75</button>
+        <button class="level-btn level-75" data-color="green">75-100</button>
+    </div>
+
+    <button id="saveBtn" class="btn">💾 Guardar Nivel</button>
+    <button id="hostBtn" class="btn danger">🔒 Modo Host</button>
+    <button id="showTreeBtn" class="btn" style="display:none;">📋 Ver Lista</button>
+</div>
+
+<script type="module" src="script.js"></script>
+
+<script>
+    // Nasconde l'alert dopo 3 secondi (puramente visivo)
+    document.addEventListener('DOMContentLoaded', () => {
+        setTimeout(() => {
+            const alert = document.getElementById('configAlert');
+            if (alert) alert.style.display = 'none';
+        }, 3000);
+    });
+</script>
+</body>
+</html>
