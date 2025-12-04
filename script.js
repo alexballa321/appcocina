@@ -1,18 +1,40 @@
 // === script.js ===
 import { docRef, setDoc, onSnapshot } from "./firebaseConfig.js";
-// Importiamo la struttura fissa
-import { staticKitchens, staticProducts } from "./structure.js";
 
 // === ELEMENTI DOM ===
 const kitchenSelect = document.getElementById("kitchenSelect");
 const productsList = document.getElementById("productsList");
 const saveBtn = document.getElementById("saveBtn");
+const showListBtn = document.getElementById("showListBtn");
+
+// Elementi Modale
+const modal = document.getElementById("reportModal");
+const backArrow = document.getElementById("backArrow"); // <--- NUOVA FRECCIA
+const closeBtnBottom = document.getElementById("closeBtnBottom");
+const modalBody = document.getElementById("modalBody");
+
+// === LA TUA STRUTTURA ===
+const staticKitchens = [
+    "Cocina Principal",
+    "Barra",
+    "Parrilla",
+    "Postres"
+];
+
+const staticProducts = [
+    "Hamburguesa",
+    "Papas Fritas",
+    "Ensalada Caesar",
+    "Gaseosa",
+    "Cerveza",
+    "Helado",
+    "Café",
+    "Agua Mineral"
+];
 
 // === STATO ===
 let data = {};
 
-// *** QUESTA È LA PARTE MODIFICATA ***
-// "label" è quello che appare scritto sul bottone.
 const levels = [
     { value: "red",    label: "0-25%",   class: "lvl-0" },
     { value: "orange", label: "25-50%",  class: "lvl-25" },
@@ -48,16 +70,12 @@ function renderProductsList() {
     if (!data[currentKitchen]) data[currentKitchen] = {};
 
     staticProducts.forEach(prod => {
-        // Default rosso (0-25%)
         const currentLevel = data[currentKitchen][prod] || "red";
-
         const row = document.createElement("div");
         row.className = "product-row";
 
         let html = `<span class="product-name">${prod}</span>`;
         html += `<div class="level-group">`;
-
-        // Genera i 4 pulsanti con le etichette percentuali
         levels.forEach(lvl => {
             const isActive = (currentLevel === lvl.value) ? "active" : "";
             html += `<button class="lvl-btn ${lvl.class} ${isActive}" 
@@ -66,25 +84,20 @@ function renderProductsList() {
                      </button>`;
         });
         html += `</div>`;
-
         row.innerHTML = html;
         productsList.appendChild(row);
     });
-
     attachRowListeners();
 }
 
 function attachRowListeners() {
     const currentKitchen = kitchenSelect.value;
-
     document.querySelectorAll(".lvl-btn").forEach(btn => {
         btn.onclick = (e) => {
             const prod = e.target.dataset.prod;
             const val = e.target.dataset.val;
-
             if (!data[currentKitchen]) data[currentKitchen] = {};
             data[currentKitchen][prod] = val;
-
             const parent = e.target.closest(".level-group");
             parent.querySelectorAll(".lvl-btn").forEach(b => b.classList.remove("active"));
             e.target.classList.add("active");
@@ -94,7 +107,6 @@ function attachRowListeners() {
 
 // === FIREBASE ===
 function setupRealtimeListener() {
-    console.log("Connessione...");
     onSnapshot(docRef, (docSnap) => {
         if (docSnap.exists()) {
             const remote = docSnap.data();
@@ -105,52 +117,64 @@ function setupRealtimeListener() {
 }
 
 async function writeAllToDB() {
-    saveBtn.textContent = "⏳ Guardando...";
+    saveBtn.textContent = "⏳...";
     try {
-        await setDoc(docRef, {
-            kitchensArray: staticKitchens,
-            productsArray: staticProducts,
-            data: data
-        }, { merge: true });
-
+        await setDoc(docRef, { kitchensArray: staticKitchens, productsArray: staticProducts, data: data }, { merge: true });
         saveBtn.textContent = "✅ Guardado";
-        setTimeout(() => saveBtn.textContent = "💾 GUARDAR CAMBIOS", 2000);
+        setTimeout(() => saveBtn.textContent = "💾 GUARDAR", 2000);
     } catch (err) {
         console.error(err);
         saveBtn.textContent = "❌ Error";
     }
 }
 
-// === EVENTI ===
-kitchenSelect.onchange = renderProductsList;
-saveBtn.onclick = writeAllToDB;
+// === LOGICA LISTA (MODALE) ===
+function openModal() {
+    modalBody.innerHTML = "";
 
-// === REPORT LISTA COMPLETA (Aggiornato con percentuali) ===
-const showListBtn = document.getElementById("showListBtn");
-if (showListBtn) {
-    showListBtn.onclick = () => {
-        const newWin = window.open("", "_blank", "width=600,height=800,scrollbars=yes");
-        const style = `body{font-family:'Inter',sans-serif;padding:20px;background:#f9f9f9} h2{text-align:center;color:#333} .k-block{background:white;margin-bottom:20px;padding:15px;border-radius:8px;box-shadow:0 2px 4px rgba(0,0,0,0.1)} .k-title{font-size:1.3em;font-weight:bold;margin-bottom:10px;border-bottom:2px solid #eee;padding-bottom:5px;color:#2c3e50} .p-item{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #f0f0f0} .badge{padding:4px 8px;border-radius:4px;color:#fff;font-weight:bold;font-size:0.9em;min-width:70px;text-align:center} .bg-red{background:#e74c3c} .bg-orange{background:#f39c12} .bg-yellow{background:#f1c40f;color:#333} .bg-green{background:#2ecc71}`;
+    staticKitchens.forEach(k => {
+        const kDiv = document.createElement("div");
+        kDiv.className = "report-kitchen";
+        kDiv.textContent = `🍳 ${k}`;
+        modalBody.appendChild(kDiv);
 
-        let content = `<html><head><title>Reporte Completo</title><style>${style}</style></head><body><h2>Reporte de Niveles</h2>`;
+        staticProducts.forEach(p => {
+            const lvlValue = (data[k] && data[k][p]) ? data[k][p] : "red";
+            const lvlObj = levels.find(l => l.value === lvlValue);
+            const label = lvlObj ? lvlObj.label : "0-25%";
 
-        staticKitchens.forEach(k => {
-            content += `<div class="k-block"><div class="k-title">🍳 ${k}</div>`;
-            staticProducts.forEach(p => {
-                const lvlValue = (data[k] && data[k][p]) ? data[k][p] : "red";
+            const itemDiv = document.createElement("div");
+            itemDiv.className = "report-item";
 
-                // Trova l'etichetta corrispondente (es. "0-25%")
-                const lvlObj = levels.find(l => l.value === lvlValue);
-                const label = lvlObj ? lvlObj.label : "0-25%";
+            let bgClass = "";
+            if(lvlValue === "red") bgClass = "#e74c3c";
+            if(lvlValue === "orange") bgClass = "#f39c12";
+            if(lvlValue === "yellow") bgClass = "#f1c40f";
+            if(lvlValue === "green") bgClass = "#2ecc71";
+            let textColor = (lvlValue === "yellow") ? "#333" : "#fff";
 
-                content += `<div class="p-item"><span>${p}</span><span class="badge bg-${lvlValue}">${label}</span></div>`;
-            });
-            content += `</div>`;
+            itemDiv.innerHTML = `
+                <span>${p}</span>
+                <span class="report-badge" style="background:${bgClass}; color:${textColor}">${label}</span>
+            `;
+            modalBody.appendChild(itemDiv);
         });
-        content += `</body></html>`;
-        newWin.document.write(content);
-    };
+    });
+
+    modal.style.display = "block"; // Usa block per coprire tutto
 }
 
+function closeModal() {
+    modal.style.display = "none";
+}
+
+// Eventi
+if(kitchenSelect) kitchenSelect.onchange = renderProductsList;
+if(saveBtn) saveBtn.onclick = writeAllToDB;
+if(showListBtn) showListBtn.onclick = openModal;
+if(backArrow) backArrow.onclick = closeModal; // <--- CLICK SULLA FRECCIA
+if(closeBtnBottom) closeBtnBottom.onclick = closeModal;
+
+// Avvio
 refreshUI();
 setupRealtimeListener();

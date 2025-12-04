@@ -2,33 +2,44 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <title>Gestión de Niveles</title>
     <link rel="stylesheet" href="style.css" />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
 <header>
-    <h1>Gestión de Niveles de Cocinas</h1>
+    <h1>Gestión de Niveles</h1>
 </header>
 
 <div class="container">
     <div class="kitchen-header">
-        <label for="kitchenSelect" style="font-size: 1.2em;">Seleccionar Cocina:</label>
-        <select id="kitchenSelect" style="margin-top:10px;"></select>
+        <label for="kitchenSelect" style="font-size: 1.1em;">Seleccionar Cocina:</label>
+        <select id="kitchenSelect" style="margin-top:8px;"></select>
     </div>
 
-    <hr style="border: 0; border-top: 1px solid rgba(255,255,255,0.2); margin: 20px 0;">
+    <hr style="border: 0; border-top: 1px solid rgba(255,255,255,0.2); margin: 15px 0;">
 
-    <div id="productsList">
-    </div>
+    <div id="productsList"></div>
 
-    <hr style="border: 0; border-top: 1px solid rgba(255,255,255,0.2); margin: 20px 0;">
+    <hr style="border: 0; border-top: 1px solid rgba(255,255,255,0.2); margin: 15px 0;">
 
     <div class="footer-actions">
         <button id="showListBtn" class="btn list-btn">📋 Ver Lista</button>
+        <button id="saveBtn" class="btn save-btn">💾 GUARDAR</button>
+    </div>
+</div>
 
-        <button id="saveBtn" class="btn save-btn">💾 GUARDAR CAMBIOS</button>
+<div id="reportModal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <span id="backArrow" class="back-arrow">&#8592;</span> <h2>Reporte Completo</h2>
+        </div>
+
+        <div id="modalBody" class="modal-body-scroll">
+        </div>
+
+        <button id="closeBtnBottom" class="btn" style="width:100%; margin-top:15px; background:#444; padding: 15px;">Cerrar Lista</button>
     </div>
 </div>
 
