@@ -1,0 +1,174 @@
+/* === style3.css === */
+body {
+    font-family: "Inter", sans-serif;
+    background: radial-gradient(circle at top, #0f2027, #203a43, #2c5364);
+    color: #f5f5f5;
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+header {
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(10px);
+    width: 100%;
+    text-align: center;
+    padding: 20px 0;
+    font-weight: 700;
+}
+
+.container {
+    margin-top: 20px;
+    margin-bottom: 40px;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(18px);
+    border-radius: 20px;
+    padding: 20px;
+    max-width: 900px;
+    width: 95%;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+select {
+    width: 100%;
+    padding: 12px;
+    border-radius: 10px;
+    border: none;
+    font-size: 1.1em;
+    background-color: #bcc9da;
+    color: #000;
+}
+
+/* === RIGHE PRODOTTI === */
+.product-row {
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 12px;
+    padding: 15px;
+    margin-bottom: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.product-name {
+    font-size: 1.1em;
+    font-weight: bold;
+    flex: 1;
+    min-width: 120px;
+}
+
+.level-group {
+    display: flex;
+    gap: 5px;
+}
+
+.lvl-btn {
+    padding: 8px 10px;
+    border: 2px solid transparent;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+    color: #fff;
+    opacity: 0.3;
+    font-size: 0.85em;
+    transition: all 0.2s;
+}
+
+.lvl-btn:hover { opacity: 0.8; }
+
+.lvl-0 { background-color: #e74c3c; }
+.lvl-25 { background-color: #f39c12; }
+.lvl-50 { background-color: #f1c40f; color: #222; }
+.lvl-75 { background-color: #2ecc71; }
+
+.lvl-btn.active {
+    opacity: 1;
+    transform: scale(1.1);
+    border-color: white;
+    box-shadow: 0 0 8px rgba(255,255,255,0.5);
+}
+
+/* === BOTTONI === */
+/*.btn {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    color: white;
+    background: linear-gradient(135deg, #3498db, #2980b9);
+    transition: transform 0.2s;
+}
+.btn:hover { transform: translateY(-2px); filter: brightness(1.1); }
+
+.btn.small { padding: 8px 12px; font-size: 0.9em; }
+
+.large-save {
+    width: 100%;
+    font-size: 1.2em;
+    padding: 15px;
+    background: linear-gradient(135deg, #11998e, #38ef7d);
+    margin-top: 10px;
+} */
+
+/* ... Tieni tutto il CSS precedente uguale fino ai bottoni ... */
+
+/* === NUOVO LAYOUT BOTTONI === */
+.footer-actions {
+    display: flex;
+    gap: 15px; /* Spazio tra i due bottoni */
+    align-items: center;
+    margin-top: 10px;
+}
+
+/* Stile base bottone */
+.btn {
+    padding: 12px 15px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: bold;
+    color: white;
+    font-size: 1em;
+    transition: transform 0.2s, filter 0.2s;
+    /* Rimuoviamo margini e larghezze vecchie se presenti */
+    margin: 0;
+    width: auto;
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+    filter: brightness(1.1);
+}
+
+/* Bottone Lista (Viola) - Prende 1 parte di spazio */
+.list-btn {
+    background: linear-gradient(135deg, #8e44ad, #9b59b6);
+    flex: 1;
+    box-shadow: 0 4px 10px rgba(142, 68, 173, 0.4);
+}
+
+/* Bottone Salva (Verde) - Prende 2 parti di spazio (più largo) */
+.save-btn {
+    background: linear-gradient(135deg, #11998e, #38ef7d);
+    flex: 2;
+    box-shadow: 0 4px 15px rgba(56, 239, 125, 0.4);
+}
+
+/* Opzionale: Mobile layout */
+@media (max-width: 400px) {
+    .footer-actions {
+        flex-direction: column; /* Su schermi piccolissimi vanno uno sotto l'altro */
+    }
+    .list-btn, .save-btn {
+        width: 100%;
+        flex: auto;
+    }
+}
+
+/* ... Assicurati che il resto del CSS per i colori (.lvl-0, etc.) sia ancora lì ... */

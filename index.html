@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Gestión de Niveles</title>
+    <link rel="stylesheet" href="style.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+<header>
+    <h1>Gestión de Niveles de Cocinas</h1>
+</header>
+
+<div class="container">
+    <div class="kitchen-header">
+        <label for="kitchenSelect" style="font-size: 1.2em;">Seleccionar Cocina:</label>
+        <select id="kitchenSelect" style="margin-top:10px;"></select>
+    </div>
+
+    <hr style="border: 0; border-top: 1px solid rgba(255,255,255,0.2); margin: 20px 0;">
+
+    <div id="productsList">
+    </div>
+
+    <hr style="border: 0; border-top: 1px solid rgba(255,255,255,0.2); margin: 20px 0;">
+
+    <div class="footer-actions">
+        <button id="showListBtn" class="btn list-btn">📋 Ver Lista</button>
+
+        <button id="saveBtn" class="btn save-btn">💾 GUARDAR CAMBIOS</button>
+    </div>
+</div>
+
+<script type="module" src="script.js"></script>
+</body>
+</html>
