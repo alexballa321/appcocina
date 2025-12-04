@@ -1,5 +1,6 @@
 // === script.js ===
 import { docRef, setDoc, onSnapshot } from "./firebaseConfig.js";
+import { staticKitchens, staticProducts } from "./structure.js";
 
 // === ELEMENTI DOM ===
 const kitchenSelect = document.getElementById("kitchenSelect");
@@ -13,24 +14,6 @@ const backArrow = document.getElementById("backArrow"); // <--- NUOVA FRECCIA
 const closeBtnBottom = document.getElementById("closeBtnBottom");
 const modalBody = document.getElementById("modalBody");
 
-// === LA TUA STRUTTURA ===
-const staticKitchens = [
-    "Cocina Principal",
-    "Barra",
-    "Parrilla",
-    "Postres"
-];
-
-const staticProducts = [
-    "Hamburguesa",
-    "Papas Fritas",
-    "Ensalada Caesar",
-    "Gaseosa",
-    "Cerveza",
-    "Helado",
-    "Café",
-    "Agua Mineral"
-];
 
 // === STATO ===
 let data = {};
