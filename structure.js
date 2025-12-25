@@ -17,6 +17,11 @@ export const staticKitchens = [
     "Miranda MX/Prime 400",
     "Marietta",
     "Asador La Camella",
+    "Marina Beach",
+    "Marylebone",
+    "Forno d'oro",
+    "The Brasserie Steak",
+    "La Brasserie Fañabe",
 
 ];
 
@@ -35,4 +40,5 @@ export const staticProducts = [
 
     // NUOVO TIPO: "count" (1, 2, 3, 4+)
     { name: "Espuma",       type: "count" },
+
 ];
