@@ -35,10 +35,11 @@ export const staticProducts = [
 
     // Esempi Si/No (C'è o non c'è?)
     { name: "Brillo", type: "boolean" },
-    { name: "Esponga",     type: "boolean" },
+    { name: "Esponja",     type: "boolean" },
     { name: "Guantes",  type: "boolean" },
 
     // NUOVO TIPO: "count" (1, 2, 3, 4+)
     { name: "Espuma",       type: "count" },
 
 ];
+
